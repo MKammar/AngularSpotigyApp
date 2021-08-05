@@ -1,0 +1,26 @@
+
+.card-items {
+  position: absolute;
+  width: fit-content;
+  top: 30%;
+  left: 37%;
+}
+.spotify-logo {
+  width: 300px;
+}
+
+.loginSpotify {
+  width: 200px;
+  margin-left: 27px;
+}
+
+@media only screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 375px) {
+  .card-items {
+    width: fit-content;
+    left: 10%;
+  }
+}

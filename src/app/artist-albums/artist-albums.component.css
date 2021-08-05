@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+.card-items {
+  width: 300px;
+}
+
+#albumIamge{
+  height: 300px;
+}
+
+#title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+}

@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col mt-3">
+        <h1 id="title">Artist Albums</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-12 mt-3" *ngFor="let album of albums">
+      <div class="card-items">
+        <mat-card >
+          <img mat-card-image [src]="album.images[0].url"  (click)="RedirectToSpotify(album.external_urls.spotify)" id="albumImage"/>
+          <mat-card-title>{{ album.name }}</mat-card-title>
+          <mat-card-subtitle> {{ album.artists[0].name }}</mat-card-subtitle>
+          <mat-card-content>
+            {{ album.release_date }} <br>
+            {{ album.total_tracks }} tracks
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+

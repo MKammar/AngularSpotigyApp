@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col align-items-center" id="searchInput">
+      <input class="form-control" type="search" (keyup)="onKey()" [(ngModel)]="search" placeholder="Search for an artist..."/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-12 mt-3" *ngFor="let artist of artists">
+      <div class="card-items">
+        <mat-card  [routerLink] = "['/ArtistAlbums',artist.id]">
+          <img mat-card-image [src]="artist.images[0]?.url"  id="artistImage"/>
+          <mat-card-title>{{ artist.name }}</mat-card-title>
+          <mat-card-content>{{ artist.followers.total }} followers</mat-card-content>
+          <ngb-rating [rate]="artist.popularity*5/100">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+

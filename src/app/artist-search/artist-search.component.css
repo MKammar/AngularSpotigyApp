@@ -1,0 +1,24 @@
+
+#searchInput {
+  margin-top: 50px;
+}
+.card-items {
+  width: 300px;
+
+}
+#artistImage {
+  height: 300px
+}
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color:yellow;
+}
+.bad {
+  color: #b0c4de;
+}
+.filled.bad {
+  color: yellow;
+}
