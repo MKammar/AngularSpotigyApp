@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   }
 
   Logout = function () {
-    localStorage.clear();
+   // localStorage.clear();
     window.location.href = "/login";
 
   }

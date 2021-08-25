@@ -8,11 +8,45 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class GetApiServiceService {
   private searchUrl: string ="";
+  private tokenBody: string ="";
   public static access_token: string;
   private getUrl: string= "";
+  public static Client_ID = "090c1d0e9e444e0b97f79b11256ae59d";
+  public static Client_SECRET ="69d2dbdc315549d8b20414abce00c942";
 
   constructor(private http: HttpClient,private activatedRoute: ActivatedRoute) {
 
+  }
+
+  getToken(code: string): Observable<any> {
+    const header = {
+      headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+      })
+  };
+  this.tokenBody = "https://accounts.spotify.com/api/token";
+   let body = "grant_type=authorization_code";
+   body+="&code="+code;
+   body+="&redirect_uri="+encodeURI("http://localhost:4200/search");
+   body+="&client_id="+GetApiServiceService.Client_ID;
+   body+="&client_secret="+GetApiServiceService.Client_SECRET;
+
+
+  return this.http.post<any>(this.tokenBody,body,header);
+  }
+  getRefreshToken(refresh: any) :Observable<any> {
+    const header = {
+      headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+      })
+  };
+  this.tokenBody = "https://accounts.spotify.com/api/token";
+  let body = "grant_type=refresh_token";
+  body+="&refresh_token="+refresh;
+  body+="&client_id="+GetApiServiceService.Client_ID;
+  body+="&client_secret="+GetApiServiceService.Client_SECRET;
+
+  return this.http.post<any>(this.tokenBody,body,header);
   }
 
   searchArtist(artist: string, type='artist'): Observable<any> {
