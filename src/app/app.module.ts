@@ -10,6 +10,9 @@ import {MatCardModule} from '@angular/material/card';
 import { ArtistAlbumsComponent } from './artist-albums/artist-albums.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
+import { ShortFormatPipe } from './pipes/short-format.pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgxPaginationModule }  from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,7 @@ import { HomeComponent } from './home/home.component';
     ArtistAlbumsComponent,
     NavbarComponent,
     HomeComponent,
+    ShortFormatPipe,
   ],
   imports: [
     HttpClientModule,
@@ -27,6 +31,8 @@ import { HomeComponent } from './home/home.component';
     NgbModule,
     BrowserAnimationsModule,
     MatCardModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

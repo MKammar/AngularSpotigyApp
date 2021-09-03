@@ -6,7 +6,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 col-12 mt-3" *ngFor="let album of albums">
+    <div class="col-md-4 col-12 mt-3" *ngFor="let album of albums | paginate: { id:'AlbumsList',
+    itemsPerPage: 10,
+    currentPage: page,
+    totalItems: totalRecords }">
       <div class="card-items">
         <mat-card >
           <img mat-card-image [src]="album.images[0].url"  (click)="RedirectToSpotify(album.external_urls.spotify)" id="albumImage"/>
@@ -18,6 +21,11 @@
           </mat-card-content>
         </mat-card>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mt-5">
+      <pagination-controls id="AlbumsList"  (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 </div>

@@ -1,9 +1,9 @@
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { GetApiServiceService } from '../get-api-service.service';
 import { NavbarComponent } from '../navbar/navbar.component';
-
+import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-artist-search',
@@ -12,15 +12,31 @@ import { NavbarComponent } from '../navbar/navbar.component';
 })
 export class ArtistSearchComponent implements OnInit {
 
-  search: string ="" ;
+  search: string = "" ;
   expiryDate: any ;
   public artists: any[];
-  constructor(private api: GetApiServiceService, private activatedRoute: ActivatedRoute) {
-    this.artists = [];
+  private timer: any;
+  private delaySearch: boolean = true;
+  noimage: any = "../../assets/Images/noimage.png"
+  totalRecords: any;
+  page: number = 1;
+
+  constructor(private api: GetApiServiceService, private activatedRoute: ActivatedRoute, private router: Router) {
+      this.artists = [];
+      this.router.events
+        .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
+        .subscribe(event => {
+          if (
+            event.id === 1 &&
+            event.url === event.urlAfterRedirects
+          ) {
+            this.artists = [];
+            sessionStorage.clear();
+          }
+        })
    }
 
    ngOnInit(): void {
-
    if(localStorage.getItem('expiry_date') == null){
     this.activatedRoute.queryParams.subscribe(params =>
       this.api.getToken(params['code'])
@@ -49,14 +65,48 @@ export class ArtistSearchComponent implements OnInit {
           })
         }
       }
+      if(sessionStorage.getItem('artistList') != null){
+        this.artists = JSON.parse(sessionStorage.getItem('artistList')!);
+        this.search = sessionStorage.getItem('searchChars')!
+      }
+
    }
 
-  onKey() {
-    this.api.searchArtist(this.search)
+   searchDelay(name: any){
+    console.log(name);
+     if(name == ""){
+       this.totalRecords = 0;
+       this.artists = [];
+       sessionStorage.clear();
+     }
+     else {
+      this.api.searchArtist(name)
       .subscribe(res => {
+        sessionStorage.setItem('artistList',JSON.stringify(res.artists.items));
+        sessionStorage.setItem('searchChars',name);
         this.artists = res.artists.items;
-        console.log(res.artists.items);
+        this.totalRecords = res.artists.items.length;
+        console.log(res.artists.items.length);
       })
+     }
+
+   }
+
+    onKey() {
+      let _this = this;
+      if(this.delaySearch){
+        if(this.timer){
+          clearTimeout(this.timer);
+        }
+        this.timer = setTimeout(
+          function(){
+          _this.searchDelay(_this.search)
+        },
+        1000,this.search);
+      }
+      else {
+        this.searchDelay(this.search);
+      }
 
   }
 

@@ -6,12 +6,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 col-12 mt-3" *ngFor="let artist of artists">
+    <div class="col-md-4 col-12 mt-3" *ngFor="let artist of artists | paginate: { id:'ArtistList',
+      itemsPerPage: 10,
+      currentPage: page,
+      totalItems: totalRecords }">
       <div class="card-items">
         <mat-card  [routerLink] = "['/ArtistAlbums',artist.id]">
-          <img mat-card-image [src]="artist.images[0]?.url"  id="artistImage"/>
+          <img mat-card-image [src]="artist.images[0]? artist.images[0].url : noimage"  id="artistImage"/>
           <mat-card-title>{{ artist.name }}</mat-card-title>
-          <mat-card-content>{{ artist.followers.total }} followers</mat-card-content>
+          <mat-card-content>{{ artist.followers.total | shortFormat }} followers</mat-card-content>
           <ngb-rating [rate]="artist.popularity*5/100">
             <ng-template let-fill="fill" let-index="index">
               <span class="star" [class.filled]="fill === 100" [class.bad]="index < 3">&#9733;</span>
@@ -19,6 +22,11 @@
           </ngb-rating>
         </mat-card>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mt-5">
+      <pagination-controls id="ArtistList"  (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 

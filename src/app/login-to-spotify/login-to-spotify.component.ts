@@ -18,7 +18,7 @@ export class LoginToSpotifyComponent  {
 
 
   loginRedirect = function () {
-      window.location.href = `${LoginToSpotifyComponent.Spotify_Authorize_Endpoint}?client_id=${LoginToSpotifyComponent.Client_ID}&response_type=code&redirect_uri=${LoginToSpotifyComponent.Redirect_URl}&scope=${LoginToSpotifyComponent.Scopes_Param}`;
+      window.location.href = `${LoginToSpotifyComponent.Spotify_Authorize_Endpoint}?client_id=${LoginToSpotifyComponent.Client_ID}&response_type=code&redirect_uri=${LoginToSpotifyComponent.Redirect_URl}&scope=${LoginToSpotifyComponent.Scopes_Param}&show_dialog=true`;
     }
 
 

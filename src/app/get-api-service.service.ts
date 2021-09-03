@@ -49,14 +49,17 @@ export class GetApiServiceService {
   return this.http.post<any>(this.tokenBody,body,header);
   }
 
-  searchArtist(artist: string, type='artist'): Observable<any> {
+  test (artist: string )  {
+    return artist;
+  }
+  searchArtist(artist: string , type='artist'): Observable<any> {
 
     const header = {
         headers: new HttpHeaders({
             'Authorization' : 'Bearer '+localStorage.getItem('token'),
         })
     };
-    this.searchUrl = 'https://api.spotify.com/v1/search?q='+artist+'&type='+type+'&market=US&limit=10&offset=0';
+    this.searchUrl = 'https://api.spotify.com/v1/search?q='+artist+'&type='+type;
     return this.http.get(this.searchUrl, header)
   }
 
